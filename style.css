@@ -6,40 +6,39 @@ body {
 }
 
 header {
-    background: #4CAF50;
+    background-color: #4CAF50;
     color: white;
     padding: 1em 0;
 }
 
-form {
+main {
     margin: 2em auto;
-    max-width: 400px;
+    max-width: 600px;
     text-align: left;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+}
+
 label {
-    display: block;
     margin-bottom: 0.5em;
 }
 
-input {
-    width: 100%;
-    padding: 0.5em;
+input, button {
     margin-bottom: 1em;
+    padding: 0.5em;
+    font-size: 1em;
 }
 
 button {
-    background: #4CAF50;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 0.5em 1em;
     cursor: pointer;
 }
 
 button:hover {
-    background: #45a049;
-}
-
-#output {
-    margin-top: 2em;
+    background-color: #45a049;
 }
