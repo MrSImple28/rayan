@@ -3,9 +3,10 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
 
     const fileInput = document.getElementById('kml-file');
     const distance = parseInt(document.getElementById('distance').value);
+    const iconUrl = document.getElementById('icon-url').value;
 
-    if (fileInput.files.length === 0) {
-        alert('Please upload a KML file!');
+    if (!fileInput.files.length) {
+        alert('Silakan unggah file KML!');
         return;
     }
 
@@ -21,15 +22,15 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
 
         // Find LineString coordinates
         const lineStrings = xmlDoc.getElementsByTagName('LineString');
-        if (lineStrings.length === 0) {
-            alert('No LineString found in the KML file!');
+        if (!lineStrings.length) {
+            alert('Tidak ada LineString di dalam file KML!');
             return;
         }
 
         const coordinates = lineStrings[0].getElementsByTagName('coordinates')[0].textContent.trim();
         const points = coordinates.split(" ").map(coord => coord.split(",").map(Number));
 
-        // Generate points based on distance
+        // Generate points with icons based on distance
         const generatedPoints = [];
         let currentDistance = 0;
 
@@ -46,14 +47,21 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
             }
         }
 
-        // Create new KML content
+        // Create new KML content with icons
         const kmlResult = `
             <?xml version="1.0" encoding="UTF-8"?>
             <kml xmlns="http://www.opengis.net/kml/2.2">
                 <Document>
-                    <name>Generated Points</name>
+                    <name>Generated Points with Icons</name>
                     ${generatedPoints.map(point => `
                         <Placemark>
+                            <Style>
+                                <IconStyle>
+                                    <Icon>
+                                        <href>${iconUrl}</href>
+                                    </Icon>
+                                </IconStyle>
+                            </Style>
                             <Point>
                                 <coordinates>${point.join(",")}</coordinates>
                             </Point>
@@ -68,11 +76,11 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'converted.kml';
+        a.download = 'converted_with_icons.kml';
         a.click();
         URL.revokeObjectURL(url);
 
-        alert('File has been converted and ready to download!');
+        alert('File berhasil dikonversi dan siap diunduh!');
     };
 
     reader.readAsText(file);
