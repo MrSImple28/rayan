@@ -15,22 +15,21 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
     reader.onload = function (event) {
         const kmlContent = event.target.result;
 
-        // Parse KML using DOMParser
+        // Parse KML file
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(kmlContent, "application/xml");
 
-        // Process KML LineString
+        // Find LineString coordinates
         const lineStrings = xmlDoc.getElementsByTagName('LineString');
         if (lineStrings.length === 0) {
             alert('No LineString found in the KML file!');
             return;
         }
 
-        // Extract coordinates
         const coordinates = lineStrings[0].getElementsByTagName('coordinates')[0].textContent.trim();
         const points = coordinates.split(" ").map(coord => coord.split(",").map(Number));
 
-        // Generate points with specified distance
+        // Generate points based on distance
         const generatedPoints = [];
         let currentDistance = 0;
 
@@ -47,9 +46,33 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
             }
         }
 
-        // Output the result
-        const outputDiv = document.getElementById('output');
-        outputDiv.innerHTML = `<pre>${JSON.stringify(generatedPoints, null, 2)}</pre>`;
+        // Create new KML content
+        const kmlResult = `
+            <?xml version="1.0" encoding="UTF-8"?>
+            <kml xmlns="http://www.opengis.net/kml/2.2">
+                <Document>
+                    <name>Generated Points</name>
+                    ${generatedPoints.map(point => `
+                        <Placemark>
+                            <Point>
+                                <coordinates>${point.join(",")}</coordinates>
+                            </Point>
+                        </Placemark>
+                    `).join("\n")}
+                </Document>
+            </kml>
+        `;
+
+        // Download KML file
+        const blob = new Blob([kmlResult], { type: 'application/vnd.google-earth.kml+xml' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'converted.kml';
+        a.click();
+        URL.revokeObjectURL(url);
+
+        alert('File has been converted and ready to download!');
     };
 
     reader.readAsText(file);
