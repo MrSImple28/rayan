@@ -1,34 +1,108 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KML Converter</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <meta name="keywords" content="khafid, kml, google, earth, nursalim, khafidns, point, khafid nursalim, linestring, titik">
+    <meta name="description" content="Membuat Titik dan Garis Dengan Jarak yang Ditentukan">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <title>Line To Point To Line KML File</title>
+     <link rel="stylesheet" href="styles.css"></head>
 <body>
-    <header>
-        <h1>KML Converter Tool</h1>
-        <p>Convert KML LineString to Points and Download the Result</p>
-    </header>
+<header>
+    <nav>
+        <div class="auth-buttons"> I 💙️ KML File</div> 
+        <ul class="menu">
+            
+                <li class="menu-item"><a href="Line&Point">Line & Point</a></li>
+                <li class="menu-item"><a href="CreatePoint">Create Point</a></li>
+                <li class="menu-item"><a href="CreateLine">Create Line</a> </li>
+                <li class="menu-item"><a href="SelectPoint">Select Point</a></li>
+                <li class="menu-item"><a href="CreateBoq">Create BoQ</a></li>
+                <li class="menu-item"><a>Lainnya</a>
+                
+                    <ul class="dropdown">
+                        <li><a href="SplitLine">Split Line</a></li>
+                        <li><a href="MergeLine">Merge Line</a></li>
+                        <li><a href="ReverseLine">Reverse Line</a></li>
+                        <li><a href="ReplaceName">Replace Name</a></li>
+                        <li><a href="LineCreate">Line Create</a></li>
+                        <li><a href="CreateAmntPoint">Create Amnt Point </a></li>
+                        <li><a href="CreateRoute">Create Route</a></li>
+                        <li><a href="ReadBOQ">Read BoQ</a></li>
+                        <li><a href="ReadKML">Read KML</a></li>
+                        <li><a href="CreateBoq">CreateBoq</a></li>
+                        <li><a href="AutomateDSG">AutomateDSG</a></li>
+                        <li><a href="AutomateLine">AutomateLine</a></li>
+                        <li><a href="KMLtoGPX">KML to GPX</a></li>
+                        <li><a href="KMLtoDXF">KML to DXF</a></li>
+                        <li><a href="VisitorToday">Visitor Today</a></li>
+                        <li><a href="VisitorArea">Visitor Area</a></li>
+                        <li><a href="VisitorAll">All Visitor</a></li>
+                    </ul>
+                </li>
+            </ul>
 
-    <main>
-        <form id="kml-form">
-            <label for="kml-file">Upload KML File:</label>
-            <input type="file" id="kml-file" accept=".kml" required>
-
-            <label for="distance">Distance between points (meters):</label>
-            <input type="number" id="distance" value="45" required>
-
-            <button type="submit">Convert and Download</button>
-        </form>
-
-        <div id="output"></div>
+        <div class="auth-buttons">
+            <a href="records?page=Line+%26+Point">History File :       1085</a> | <a href="VisitorAll" >Visitor : 9747</a>
+            
+        </div>
+    </nav>
+</header>    <main>
+        <section class="split-pdf">
+            <h1>Line To Point To Line</h1>
+            <p>Membuat Titik dan Garis Dengan Jarak yang Ditentukan
+      
+            <form enctype="multipart/form-data" method="post">
+                 <p><b><label for="kml-upload" class="drop-container-label">Silahkan Upload File KML yang berisi LineString atau Garis</label></b></p>
+                 <p><a href="https://youtu.be/6kPsdahbdDA">Video Tutorial</a></p>
+                <p><input class="drop-container" id="kml-upload" type="file" name="kml_file" accept=".kml" /></p>
+                <p>
+                    <label for="distance">Jarak antar titik (meter): </label>
+                    <input class="auth-buttons" type="number" name="distance" id="distance" value="45" min="1">
+                </p>
+                <p><input class="select-pdf" type="submit" value="Upload and Convert" /></p>
+            </form>
+        </section>
     </main>
-
-    <footer>
-        <p>&copy; 2025 KML Tool</p>
+<footer>
+    <hr>
+        <p>Developed By <a href="https://t.me/khafidns">Khafid Nursalim</a> & Grace Leica Delanie • 2024</p>
+        <br>
+        <p>Online Until : <span class="countdown" id="countdown">Loading...</span></p>
     </footer>
-    <script src="script.js"></script>
-</body>
+
+    
+    <script>
+        // Set the target date for the countdown (YYYY-MM-DD HH:MM:SS)
+        const targetDate = new Date('2025-07-18 23:59:59').getTime();
+
+        // Update the countdown every second
+        const countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const timeRemaining = targetDate - now;
+
+            // Calculate years, months, days, hours, minutes, and seconds remaining
+            const years = Math.floor(timeRemaining / (1000 * 60 * 60 * 24 * 365));
+            const months = Math.floor((timeRemaining % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+            const days = Math.floor((timeRemaining % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            // Display the countdown
+            document.getElementById('countdown').innerHTML =
+                `${months} Bulan | ${days} Hari | ${hours} Jam | ${minutes} | Menit ${seconds} Detik`;
+
+            // If the countdown is over, display a message
+            if (timeRemaining < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').innerHTML = "Happy New Year!";
+            }
+        }, 1000);
+    </script>
+
+    
+    </body>
 </html>
