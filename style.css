@@ -1,207 +1,44 @@
-body,
-html {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #e0e0e0;
-  text-align: center;
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 header {
-  background-color: #ffffff;
-  padding: 10px 20px;
-  border-bottom: 0px solid #1f1209;
-  box-shadow: 0 20px 20px -20px #333;
-  position: fixed; /* Membuat header tetap di atas */
-  top: 0; /* Mengunci header di bagian atas layar */
-  right: 0px;
-  left: 0px;
-  z-index: 100; /* Memastikan header berada di atas elemen lainnya */
+    background-color: #4CAF50;
+    color: white;
+    padding: 1em 0;
 }
-
-.auth-buttons button {
-  padding: 5px 15px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-/* Tambahkan padding-top ke body untuk menghindari konten tertutup oleh header */
-body {
-  padding-top: 60px; /* Sesuaikan nilai ini dengan tinggi header */
-}
-
-.split-pdf {
-  padding: 50px;
-  height: 100%;
-}
-
-.split-pdf h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.split-pdf p {
-  font-size: 16px;
-  color: #454545;
-  margin-bottom: 20px;
-}
-
-.select-pdf {
-  background-color: #0000ff;
-  color: #ffffff;
-  padding: 10px 20px;
-  font-size: 23px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-footer {
-  margin-top: 50px;
-  padding: 20px;
-  background-color: #e0e0e0;
-  border-top: 1px solid #e0e0e0;
-}
-
-footer p {
-  margin: 0;
-  font-size: 14px;
-  color: #454545;
-}
-
-.drop-container {
-  gap: 10px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  border: 2px dashed #555;
-  color: #454545;
-  cursor: pointer;
-  transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
-}
-
-li:hover {
-  background-color: #afafaf; /* Change background color of ul on hover */
-  border-color: #777; /* Change border color of ul on hover */
-  color: #ffffff;
-}
-
-li {
-  list-style-type: none;
-  padding: 10px;
-  border: 0px solid #afafaf;
-  border-radius: 5px;
-  transition: background 0.3s, border 0.3s, color 0.3s;
-  text-align: center;
-  font-weight: bold;
-}
-
-.auth-buttons {
-  color: #000000;
-  background-color: #afafaf;
-  list-style-type: none;
-  padding: 10px;
-  margin: 0;
-  border: 1px solid #afafaf;
-  border-radius: 5px;
-  transition: background 0.3s, border 0.3s;
-  font-weight: bold;
-}
-
-.auth-buttonsx {
-  color: #000000;
-  background-color: #afafaf;
-  margin: 0;
-  border: 1px solid #afafaf;
-  border-radius: 5px;
-  transition: background 0.3s, border 0.3s;
-  font-weight: bold;
-}
-
 
 main {
-  flex: 1;
+    margin: 2em auto;
+    max-width: 600px;
+    text-align: left;
 }
 
-h1 {
-  text-align: center;
-  color: #444;
+form {
+    display: flex;
+    flex-direction: column;
 }
 
-table {
-  width: 80%;
-  margin: 0 auto;
-  border-collapse: collapse;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+label {
+    margin-bottom: 0.5em;
 }
 
-th,
-td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+input, button {
+    margin-bottom: 1em;
+    padding: 0.5em;
+    font-size: 1em;
 }
 
-th {
-  background-color: #f2f2f2;
-  color: #333;
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
-tr:hover {
-  background-color: #f1f1f1;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-}
-
-.menu {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-}
-
-.menu-item {
-  position: relative;
-}
-
-.menu-item > a {
-  color: #000000;
-  text-decoration: none;
-  padding: 0px 10px;
-  display: block;
-  transition: background 0.3s ease;
-}
-
-/* Dropdown Menu Styles */
-.dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #ffffff;
-  list-style: square;
-  padding: 0;
-  margin: 0;
-  min-width: 160px;
-  z-index: 1000;
-  box-shadow: 0 20px 20px -20px #333;
-}
-
-.dropdown a {
-  color: #000000;
-  text-decoration: none;
-  display: block;
-  transition: #ffff 0.3s ease;
-}
-
-/* Show Dropdown on Hover */
-.menu-item:hover .dropdown {
-  display: block;
+button:hover {
+    background-color: #45a049;
 }
