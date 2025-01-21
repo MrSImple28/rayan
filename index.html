@@ -3,31 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Line To Point Tool</title>
+    <title>Line to Point Tool</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="#">Line & Point</a></li>
+            <li><a href="#">Create Point</a></li>
+            <li><a href="#">Create Line</a></li>
+            <li><a href="#">Select Point</a></li>
+            <li><a href="#">Create BoQ</a></li>
+            <li><a href="#">Lainnya</a></li>
+        </ul>
+    </nav>
+
     <header>
         <h1>Line To Point To Line</h1>
         <p>Membuat Titik dan Garis Dengan Jarak yang Ditentukan</p>
     </header>
 
     <main>
+        <p>Silahkan Upload File KML yang berisi LineString atau Garis</p>
         <form id="kml-form">
-            <label for="kml-file">Silahkan Upload File KML yang berisi LineString atau Garis:</label>
             <input type="file" id="kml-file" accept=".kml" required>
-
             <label for="distance">Jarak antar titik (meter):</label>
-            <input type="number" id="distance" value="50" required>
-
+            <input type="number" id="distance" value="45" required>
             <button type="submit" class="btn">Upload and Convert</button>
         </form>
-
         <div id="output"></div>
     </main>
 
     <footer>
-        <p>Developed By <a href="#">Nama Developer</a> • 2025</p>
+        <p>Developed By Nama Developer • 2025</p>
     </footer>
 
     <script src="script.js"></script>
