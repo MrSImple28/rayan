@@ -2,7 +2,7 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
     event.preventDefault();
 
     const fileInput = document.getElementById('kml-file');
-    const distance = parseInt(document.getElementById('distance').value);
+    const distance = parseFloat(document.getElementById('distance').value);
 
     if (!fileInput.files.length) {
         alert('Silakan unggah file KML!');
@@ -15,72 +15,85 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
     reader.onload = function (event) {
         const kmlContent = event.target.result;
 
-        // Parse KML file
+        // Parse KML
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(kmlContent, "application/xml");
 
-        // Find LineString coordinates
-        const lineStrings = xmlDoc.getElementsByTagName('LineString');
-        if (!lineStrings.length) {
+        // Extract coordinates from LineString
+        const lineString = xmlDoc.querySelector('LineString coordinates');
+        if (!lineString) {
             alert('Tidak ada LineString di dalam file KML!');
             return;
         }
 
-        const coordinates = lineStrings[0].getElementsByTagName('coordinates')[0].textContent.trim();
-        const points = coordinates.split(" ").map(coord => coord.split(",").map(Number));
+        const coordsText = lineString.textContent.trim();
+        const coordinates = coordsText.split(/\s+/).map(coord => {
+            const [lng, lat, alt] = coord.split(',').map(Number);
+            return { lng, lat, alt };
+        });
 
-        // Generate points with the specified distance
-        const generatedPoints = [];
-        let currentDistance = 0;
+        const placemarks = [];
+        let accumulatedDistance = 0;
 
-        for (let i = 1; i < points.length; i++) {
-            const [x1, y1] = points[i - 1];
-            const [x2, y2] = points[i];
+        // Generate placemarks based on distance
+        for (let i = 1; i < coordinates.length; i++) {
+            const prev = coordinates[i - 1];
+            const curr = coordinates[i];
 
-            const segmentDistance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-            currentDistance += segmentDistance;
+            const segmentDistance = haversineDistance(prev, curr);
+            accumulatedDistance += segmentDistance;
 
-            if (currentDistance >= distance) {
-                generatedPoints.push(points[i]);
-                currentDistance = 0;
+            if (accumulatedDistance >= distance) {
+                placemarks.push(curr);
+                accumulatedDistance = 0;
             }
         }
 
-        // Create new KML content with points and lines
-        const kmlResult = `
+        // Create KML content with placemarks
+        const newKml = `
             <?xml version="1.0" encoding="UTF-8"?>
             <kml xmlns="http://www.opengis.net/kml/2.2">
                 <Document>
-                    <name>Generated Points and Lines</name>
-                    ${generatedPoints.map(point => `
+                    <name>Generated Placemarks</name>
+                    ${placemarks.map(point => `
                         <Placemark>
                             <Point>
-                                <coordinates>${point.join(",")}</coordinates>
+                                <coordinates>${point.lng},${point.lat},${point.alt || 0}</coordinates>
                             </Point>
                         </Placemark>
-                    `).join("\n")}
-                    <Placemark>
-                        <LineString>
-                            <coordinates>
-                                ${generatedPoints.map(point => point.join(",")).join(" ")}
-                            </coordinates>
-                        </LineString>
-                    </Placemark>
+                    `).join('\n')}
                 </Document>
             </kml>
         `;
 
-        // Download KML file
-        const blob = new Blob([kmlResult], { type: 'application/vnd.google-earth.kml+xml' });
+        // Download generated KML file
+        const blob = new Blob([newKml], { type: 'application/vnd.google-earth.kml+xml' });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'generated_points_lines.kml';
-        a.click();
-        URL.revokeObjectURL(url);
 
-        alert('File berhasil dibuat!');
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'generated_placemarks.kml';
+        link.click();
+
+        URL.revokeObjectURL(url);
+        alert('File KML berhasil dibuat!');
     };
 
     reader.readAsText(file);
 });
+
+// Calculate distance between two coordinates
+function haversineDistance(coord1, coord2) {
+    const R = 6371000; // Radius of the Earth in meters
+    const toRad = angle => (angle * Math.PI) / 180;
+
+    const dLat = toRad(coord2.lat - coord1.lat);
+    const dLng = toRad(coord2.lng - coord1.lng);
+
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(coord1.lat)) * Math.cos(toRad(coord2.lat)) *
+        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
