@@ -1,37 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KML Icon Tool</title>
+    <title>Line To Point Tool</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>KML Icon Tool</h1>
-        <p>Tambahkan ikon di sepanjang path pada file KML</p>
+        <h1>Line To Point To Line</h1>
+        <p>Membuat Titik dan Garis Dengan Jarak yang Ditentukan</p>
     </header>
 
     <main>
         <form id="kml-form">
-            <label for="kml-file">Upload KML File:</label>
+            <label for="kml-file">Silahkan Upload File KML yang berisi LineString atau Garis:</label>
             <input type="file" id="kml-file" accept=".kml" required>
 
-            <label for="distance">Jarak antar ikon (meter):</label>
-            <input type="number" id="distance" value="100" required>
+            <label for="distance">Jarak antar titik (meter):</label>
+            <input type="number" id="distance" value="50" required>
 
-            <label for="icon-url">URL Ikon:</label>
-            <input type="text" id="icon-url" placeholder="https://example.com/icon.png" required>
-
-            <button type="submit">Convert and Download</button>
+            <button type="submit" class="btn">Upload and Convert</button>
         </form>
 
         <div id="output"></div>
     </main>
 
     <footer>
-        <p>&copy; 2025 KML Icon Tool</p>
+        <p>Developed By <a href="#">Nama Developer</a> • 2025</p>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
