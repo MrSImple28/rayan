@@ -3,7 +3,6 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
 
     const fileInput = document.getElementById('kml-file');
     const distance = parseInt(document.getElementById('distance').value);
-    const iconUrl = document.getElementById('icon-url').value;
 
     if (!fileInput.files.length) {
         alert('Silakan unggah file KML!');
@@ -30,7 +29,7 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
         const coordinates = lineStrings[0].getElementsByTagName('coordinates')[0].textContent.trim();
         const points = coordinates.split(" ").map(coord => coord.split(",").map(Number));
 
-        // Generate points with icons based on distance
+        // Generate points with the specified distance
         const generatedPoints = [];
         let currentDistance = 0;
 
@@ -47,26 +46,26 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
             }
         }
 
-        // Create new KML content with icons
+        // Create new KML content with points and lines
         const kmlResult = `
             <?xml version="1.0" encoding="UTF-8"?>
             <kml xmlns="http://www.opengis.net/kml/2.2">
                 <Document>
-                    <name>Generated Points with Icons</name>
+                    <name>Generated Points and Lines</name>
                     ${generatedPoints.map(point => `
                         <Placemark>
-                            <Style>
-                                <IconStyle>
-                                    <Icon>
-                                        <href>${iconUrl}</href>
-                                    </Icon>
-                                </IconStyle>
-                            </Style>
                             <Point>
                                 <coordinates>${point.join(",")}</coordinates>
                             </Point>
                         </Placemark>
                     `).join("\n")}
+                    <Placemark>
+                        <LineString>
+                            <coordinates>
+                                ${generatedPoints.map(point => point.join(",")).join(" ")}
+                            </coordinates>
+                        </LineString>
+                    </Placemark>
                 </Document>
             </kml>
         `;
@@ -76,11 +75,11 @@ document.getElementById('kml-form').addEventListener('submit', function (event) 
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'converted_with_icons.kml';
+        a.download = 'generated_points_lines.kml';
         a.click();
         URL.revokeObjectURL(url);
 
-        alert('File berhasil dikonversi dan siap diunduh!');
+        alert('File berhasil dibuat!');
     };
 
     reader.readAsText(file);
