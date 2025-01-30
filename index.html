@@ -3,41 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Line to Point Tool</title>
-    <link rel="stylesheet" href="style.css">
+    <title>KML Placemark Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#">Line & Point</a></li>
-            <li><a href="#">Create Point</a></li>
-            <li><a href="#">Create Line</a></li>
-            <li><a href="#">Select Point</a></li>
-            <li><a href="#">Create BoQ</a></li>
-            <li><a href="#">Lainnya</a></li>
-        </ul>
-    </nav>
+    <h2>Tambah Placemark Otomatis dari Path (KML)</h2>
+    <form action="/" method="post" enctype="multipart/form-data">
+        <label for="file">Upload File KML:</label>
+        <input type="file" name="file" required><br><br>
 
-    <header>
-        <h1>Line To Point To Line</h1>
-        <p>Membuat Titik dan Garis Dengan Jarak yang Ditentukan</p>
-    </header>
+        <label for="distance">Jarak antar Placemark (meter):</label>
+        <input type="number" name="distance" value="50" required><br><br>
 
-    <main>
-        <p>Silahkan Upload File KML yang berisi LineString atau Garis</p>
-        <form id="kml-form">
-            <input type="file" id="kml-file" accept=".kml" required>
-            <label for="distance">Jarak antar titik (meter):</label>
-            <input type="number" id="distance" value="45" required>
-            <button type="submit" class="btn">Upload and Convert</button>
-        </form>
-        <div id="output"></div>
-    </main>
-
-    <footer>
-        <p>Developed By Nama Developer • 2025</p>
-    </footer>
-
-    <script src="script.js"></script>
+        <button type="submit">Upload & Convert</button>
+    </form>
 </body>
 </html>
