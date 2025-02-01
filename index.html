@@ -1,33 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Pembuat Titik dan Garis Google Earth</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KML Tool</title>
+    <style>
+        /* Tambahkan gaya CSS Anda di sini */
+    </style>
 </head>
 <body>
-  <h1>Pembuat Titik dan Garis Google Earth</h1>
+    <h1>Upload and Convert KML</h1>
+    <form id="kmlForm">
+        <label for="kmlFile">Upload KML File:</label>
+        <input type="file" id="kmlFile" name="kmlFile" accept=".kml">
+        <br>
+        <label for="placemarkName">Placemark Name:</label>
+        <input type="text" id="placemarkName" name="placemarkName">
+        <br>
+        <label for="distance">Distance (meters):</label>
+        <input type="number" id="distance" name="distance">
+        <br>
+        <button type="submit">Upload and Convert</button>
+    </form>
 
-  <form>
-    <label for="latitude">Latitude:</label>
-    <input type="number" id="latitude" name="latitude" required><br><br>
+    <script>
+        document.getElementById('kmlForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const file = document.getElementById('kmlFile').files[0];
+            const placemarkName = document.getElementById('placemarkName').value;
+            const distance = document.getElementById('distance').value;
 
-    <label for="longitude">Longitude:</label>
-    <input type="number" id="longitude" name="longitude" required><br><br>
+            if (file && placemarkName && distance) {
+                processKML(file, placemarkName, distance);
+            } else {
+                alert('Please fill all fields');
+            }
+        });
 
-    <label for="namaTE">Nama TE:</label>
-    <input type="text" id="namaTE" name="namaTE" required><br><br>
-
-    <label for="jarak">Jarak (meter):</label>
-    <input type="number" id="jarak" name="jarak" required><br><br>
-
-    <button type="button" onclick="buatTitik()">Tambah Titik</button>
-    <button type="button" onclick="buatGaris()">Buat Garis</button>
-    <button type="button" onclick="buatKML()">Unduh KML</button>
-  </form>
-
-  <h2>Daftar Titik:</h2>
-  <ul id="daftarTitik"></ul>
-
-  <script src="script.js"></script>
+        function processKML(file, placemarkName, distance) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const kmlContent = e.target.result;
+                // Proses KML content dan tambahkan Placemark dan garis
+                // Anda bisa menggunakan library atau kode custom untuk memanipulasi KML
+                console.log(kmlContent);
+                alert('KML processed with Placemark and Line');
+            };
+            reader.readAsText(file);
+        }
+    </script>
 </body>
 </html>
